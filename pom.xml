@@ -146,6 +146,22 @@
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.atlassian.docco</groupId>
+                <artifactId>atlassian-docco-maven</artifactId>
+                <version>1.0-beta4</version>
+                <configuration>
+                    <skipNoDocco>false</skipNoDocco>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>docco</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

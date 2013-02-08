@@ -1,12 +1,11 @@
 package it.com.atlassian.localtunnel;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.Socket;
 import java.util.Map;
 
-import com.atlassian.localtunnel.DefaultLocalTunnelFactory;
-import com.atlassian.localtunnel.LocalTunnel;
-import com.atlassian.localtunnel.LocalTunnelFactory;
-import com.atlassian.localtunnel.LocalTunnelProtocol;
+import com.atlassian.localtunnel.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -69,6 +68,20 @@ public class LocalTunnelTest
     }
 
     @Test
+    public void remoteRun() throws Exception
+    {
+
+        DefaultLocalTunnelFactory factory = new DefaultLocalTunnelFactory();
+        LocalTunnel tunnel = factory.create(8000);
+
+        tunnel.start();
+        Thread.sleep(1000 * 80);
+        System.out.println("stopping...");
+        tunnel.stop();
+        System.out.println("stopped");
+    }
+
+    @Test
     public void localProtocolSendReceive() throws Exception
     {
         Socket control = null;
@@ -104,7 +117,7 @@ public class LocalTunnelTest
         try
         {
             DefaultLocalTunnelFactory factory = new DefaultLocalTunnelFactory();
-            LocalTunnel tunnel = factory.create(8000);
+            DefaultLocalTunnel tunnel = (DefaultLocalTunnel) factory.create(8000);
 
             LocalTunnelProtocol protocol = new LocalTunnelProtocol();
 

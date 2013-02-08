@@ -1,6 +1,8 @@
 package com.atlassian.localtunnel;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -102,6 +104,21 @@ public class DefaultLocalTunnel implements LocalTunnel
             be = getBackend(host);
         }
         return new Socket(be.getHost(),be.getPort());
+    }
+
+    public Socket createControlSocket(final Backend backend, Proxy proxy) throws IOException
+    {
+        Backend be = backend;
+
+        if(null == backend)
+        {
+            be = getBackend(host);
+        }
+        
+        Socket socket = new Socket(proxy);
+        InetSocketAddress addr = new InetSocketAddress(be.getHost(),be.getPort());
+        socket.connect(addr);
+        return socket;
     }
 
     public int getPort()
