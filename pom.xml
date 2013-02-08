@@ -3,8 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
     <groupId>com.atlassian.localtunnel</groupId>
     <artifactId>localtunnel-java-client</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <name>LocalTunnel Java Client</name>
     <packaging>bundle</packaging>
 
@@ -91,6 +93,13 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     
     <build>
@@ -121,6 +130,7 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>2.3.7</version>
+                <extensions>true</extensions>
                 <configuration>
                     <instructions>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>

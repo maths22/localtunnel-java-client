@@ -146,9 +146,13 @@ public class DefaultLocalTunnel implements LocalTunnel
             String response = httpclient.execute(httpGet,responseHandler);
             port = Integer.parseInt(response);
         }
-        catch (IOException | NumberFormatException e)
+        catch (IOException ioe)
         {
-            e.printStackTrace();
+            ioe.printStackTrace();
+            port = 0;
+        }
+        catch (NumberFormatException nfe)
+        {
             port = 0;
         }
         finally
