@@ -9,4 +9,8 @@ Community
  * [Localtunnel Google Group](https://groups.google.com/forum/#!forum/localtunnel)
  * [LocalTunnel GitHub Project](https://github.com/progrium/localtunnel)
  * [LocalTunnel Java Client Source](https://bitbucket.org/atlassian/localtunnel-java-client)
+ 
+ License
+ -------
+ Apache 2
 
