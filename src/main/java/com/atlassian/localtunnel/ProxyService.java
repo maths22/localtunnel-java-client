@@ -37,46 +37,43 @@ public class ProxyService
     public void start()
     {
         final LocalTunnelProtocol protocol = new LocalTunnelProtocol();
-        
-        for(int i=0;i<concurrency;i++)
+
+        for (int i = 0; i < concurrency; i++)
         {
-            exec.execute(new Runnable() {
+            exec.execute(new Runnable()
+            {
                 @Override
                 public void run()
                 {
-                    System.out.println("running proxy...");
                     SocketJoiner joiner = null;
                     try
                     {
-                        while(!exec.isShutdown())
-                        {
-                            Socket proxy = new Socket(backend.getHost(),backend.getPort());
-                            protocol.sendVersion(proxy);
-                            
-                            protocol.sendMessage(proxy,protocol.proxyRequest(tunnelName,clientName));
-                            String message = protocol.receiveMessage(proxy);
-                            
-                            if(null != message && !"".equals(message))
-                            {
-                                Gson gson = new Gson();
-                                Map result = gson.fromJson(message,Map.class);
+                        Socket proxy = new Socket(backend.getHost(), backend.getPort());
+                        protocol.sendVersion(proxy);
 
-                                if(null != result && null != result.get("proxy") && (Boolean)result.get("proxy"))
-                                {
-                                    Socket local = new Socket("0.0.0.0",port);
-                                    joiner = new SocketJoiner(proxy,local);
-                                    joiner.join();
-                                }
+                        protocol.sendMessage(proxy, protocol.proxyRequest(tunnelName, clientName));
+                        String message = protocol.receiveMessage(proxy);
+
+                        if (null != message && !"".equals(message))
+                        {
+                            Gson gson = new Gson();
+                            Map result = gson.fromJson(message, Map.class);
+
+                            if (null != result && null != result.get("proxy") && (Boolean) result.get("proxy"))
+                            {
+                                Socket local = new Socket("0.0.0.0", port);
+                                joiner = new SocketJoiner(proxy, local);
+                                joiner.join();
                             }
                         }
-                        if(null != joiner)
+                        if (null != joiner)
                         {
                             joiner.stop();
                         }
                     }
                     catch (IOException e)
                     {
-                        if(null != joiner)
+                        if (null != joiner)
                         {
                             joiner.stop();
                         }
@@ -98,5 +95,5 @@ public class ProxyService
 
         }
     }
-    
+
 }

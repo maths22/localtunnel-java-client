@@ -1,6 +1,8 @@
 package com.atlassian.localtunnel;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +27,7 @@ public class DefaultLocalTunnel implements LocalTunnel
     private final String tunnelName;
     private final String clientName;
     private final String host;
+    private String remoteHost;
     
     private ControlPingPongService pingPongService;
     private ProxyService proxyService;
@@ -58,9 +61,10 @@ public class DefaultLocalTunnel implements LocalTunnel
         proxyService = new ProxyService(backend,port,tunnelName,clientName,ctr.getConcurrency().intValue());
         proxyService.start();
 
+        remoteHost = "http://" + ctr.getHost().split("\\.")[0] + "." + host;
         
         System.out.println("started the local tunnel");
-        System.out.println("you can now access: http://" + ctr.getHost().split("\\.")[0] + "." + host);
+        System.out.println("you can now access: " + remoteHost);
     }
 
     private Backend getBackend(String host)
@@ -89,7 +93,7 @@ public class DefaultLocalTunnel implements LocalTunnel
     @Override
     public String getRemoteHost()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return remoteHost;
     }
 
     @Override
@@ -102,6 +106,21 @@ public class DefaultLocalTunnel implements LocalTunnel
             be = getBackend(host);
         }
         return new Socket(be.getHost(),be.getPort());
+    }
+
+    public Socket createControlSocket(final Backend backend, Proxy proxy) throws IOException
+    {
+        Backend be = backend;
+
+        if(null == backend)
+        {
+            be = getBackend(host);
+        }
+        
+        Socket socket = new Socket(proxy);
+        InetSocketAddress addr = new InetSocketAddress(be.getHost(),be.getPort());
+        socket.connect(addr);
+        return socket;
     }
 
     public int getPort()

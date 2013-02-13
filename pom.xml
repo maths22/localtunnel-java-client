@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.atlassian.localtunnel</groupId>
     <artifactId>localtunnel-java-client</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>LocalTunnel Java Client</name>
     <packaging>bundle</packaging>
 
@@ -56,6 +54,17 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-osgi</artifactId>
             <version>4.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-osgi</artifactId>
+            <version>4.2.2</version>
         </dependency>
         
         <dependency>
@@ -100,6 +109,7 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        
     </dependencies>
     
     <build>
@@ -142,8 +152,29 @@
                             Include-Resource,Private-Package,
                             Bnd-LastModified
                         </_removeheaders>
+                        <Export-Package>
+                            com.atlassian.localtunnel*
+                            ,com.atlassian.localtunnel.data*
+                            ,com.atlassian.localtunnel.util*
+                        </Export-Package>
                     </instructions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.docco</groupId>
+                <artifactId>atlassian-docco-maven</artifactId>
+                <version>1.0-beta4</version>
+                <configuration>
+                    <skipNoDocco>false</skipNoDocco>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>docco</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
