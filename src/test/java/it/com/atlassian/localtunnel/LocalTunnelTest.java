@@ -44,7 +44,7 @@ public class LocalTunnelTest
     {
         HttpClient httpclient = new DefaultHttpClient();
 
-        HttpGet httpGet = new HttpGet("http://jd-linux:8004");
+        HttpGet httpGet = new HttpGet("http://localhost:8004");
         httpGet.addHeader("Accept-Encoding", "identity");
         httpGet.addHeader("Host", "_backend.localhost");
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -137,18 +137,6 @@ public class LocalTunnelTest
             }
         }
 
-    }
-
-    @Test
-    public void localTunnelCreated() throws Exception
-    {
-        LocalTunnelFactory factory = new DefaultLocalTunnelFactory();
-
-        LocalTunnel tunnel = factory.create(8080);
-
-        String remoteHost = tunnel.getRemoteHost();
-
-        //ping the host
     }
 
 }

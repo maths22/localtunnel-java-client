@@ -30,25 +30,18 @@ public class ControlPingPongService
                 @Override
                 public void run()
                 {
-                    System.out.println("running pingpong");
                     try
                     {
                         while(!control.isClosed() && !exec.isShutdown())
                         {
                             String message = protocol.receiveMessage(control);
-                            System.out.println("got message: " + message);
 
                             Gson gson = new Gson();
                             Map<String,String> result = gson.fromJson(message,Map.class);
                             
                             if(null != result && null != result.get("control") && result.get("control").equals("ping"))
                             {
-                                System.out.println("sending pong...");
                                 protocol.sendMessage(control,protocol.pong());
-                            }
-                            else
-                            {
-                                System.out.println("no ping");
                             }
                         }
                     }

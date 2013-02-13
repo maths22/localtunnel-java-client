@@ -27,7 +27,6 @@ public class LocalTunnelProtocol
     
     public String receiveMessage(Socket socket) throws IOException
     {
-        System.out.println("recieving from: " + socket.getInetAddress().getHostName());
         String message = null;        
         BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
         DataInputStream dis = new DataInputStream(bis);

@@ -56,6 +56,17 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-osgi</artifactId>
             <version>4.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-osgi</artifactId>
+            <version>4.2.2</version>
         </dependency>
         
         <dependency>
@@ -143,6 +154,11 @@
                             Include-Resource,Private-Package,
                             Bnd-LastModified
                         </_removeheaders>
+                        <Export-Package>
+                            com.atlassian.localtunnel*
+                            ,com.atlassian.localtunnel.data*
+                            ,com.atlassian.localtunnel.util*
+                        </Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

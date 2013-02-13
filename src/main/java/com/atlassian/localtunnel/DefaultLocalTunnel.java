@@ -27,6 +27,7 @@ public class DefaultLocalTunnel implements LocalTunnel
     private final String tunnelName;
     private final String clientName;
     private final String host;
+    private String remoteHost;
     
     private ControlPingPongService pingPongService;
     private ProxyService proxyService;
@@ -60,9 +61,10 @@ public class DefaultLocalTunnel implements LocalTunnel
         proxyService = new ProxyService(backend,port,tunnelName,clientName,ctr.getConcurrency().intValue());
         proxyService.start();
 
+        remoteHost = "http://" + ctr.getHost().split("\\.")[0] + "." + host;
         
         System.out.println("started the local tunnel");
-        System.out.println("you can now access: http://" + ctr.getHost().split("\\.")[0] + "." + host);
+        System.out.println("you can now access: " + remoteHost);
     }
 
     private Backend getBackend(String host)
@@ -91,7 +93,7 @@ public class DefaultLocalTunnel implements LocalTunnel
     @Override
     public String getRemoteHost()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return remoteHost;
     }
 
     @Override
