@@ -48,22 +48,25 @@ public class ProxyService
                     SocketJoiner joiner = null;
                     try
                     {
-                        Socket proxy = new Socket(backend.getHost(), backend.getPort());
-                        protocol.sendVersion(proxy);
-
-                        protocol.sendMessage(proxy, protocol.proxyRequest(tunnelName, clientName));
-                        String message = protocol.receiveMessage(proxy);
-
-                        if (null != message && !"".equals(message))
+                        while (!exec.isShutdown())
                         {
-                            Gson gson = new Gson();
-                            Map result = gson.fromJson(message, Map.class);
+                            Socket proxy = new Socket(backend.getHost(), backend.getPort());
+                            protocol.sendVersion(proxy);
 
-                            if (null != result && null != result.get("proxy") && (Boolean) result.get("proxy"))
+                            protocol.sendMessage(proxy, protocol.proxyRequest(tunnelName, clientName));
+                            String message = protocol.receiveMessage(proxy);
+
+                            if (null != message && !"".equals(message))
                             {
-                                Socket local = new Socket("0.0.0.0", port);
-                                joiner = new SocketJoiner(proxy, local);
-                                joiner.join();
+                                Gson gson = new Gson();
+                                Map result = gson.fromJson(message, Map.class);
+
+                                if (null != result && null != result.get("proxy") && (Boolean) result.get("proxy"))
+                                {
+                                    Socket local = new Socket("0.0.0.0", port);
+                                    joiner = new SocketJoiner(proxy, local);
+                                    joiner.join();
+                                }
                             }
                         }
                         if (null != joiner)
