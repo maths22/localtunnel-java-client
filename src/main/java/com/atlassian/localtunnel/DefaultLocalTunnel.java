@@ -62,7 +62,15 @@ public class DefaultLocalTunnel implements LocalTunnel
         proxyService = new ProxyService(backend,port,tunnelName,clientName,ctr.getConcurrency().intValue());
         proxyService.start();
 
-        remoteHost = "http://" + ctr.getHost().split("\\.")[0] + "." + host;
+        String[] hostParts = host.split(":");
+        if(hostParts.length > 1 && !hostParts[1].equals("80"))
+        {
+            remoteHost = "http://" + ctr.getHost().split("\\.")[0] + "." + host;
+        }
+        else
+        {
+            remoteHost = "http://" + ctr.getHost().split("\\.")[0] + "." + hostParts[0];
+        }
         
         System.out.println("started the local tunnel");
         System.out.println("you can now access: " + remoteHost);
