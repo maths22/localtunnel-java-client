@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @since version
  */
-
+@Ignore
 public class LocalTunnelTest
 {
     @Test
@@ -74,7 +74,7 @@ public class LocalTunnelTest
     {
 
         DefaultLocalTunnelFactory factory = new DefaultLocalTunnelFactory();
-        LocalTunnel tunnel = factory.create(8000,"lt39.info:80");
+        LocalTunnel tunnel = factory.create(8000);
 
         tunnel.start();
         Thread.sleep(1000 * 80);
