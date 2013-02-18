@@ -31,6 +31,7 @@ public class DefaultLocalTunnel implements LocalTunnel
     
     private ControlPingPongService pingPongService;
     private ProxyService proxyService;
+    private boolean started = false;
 
     public DefaultLocalTunnel(int port, String tunnelName, String clientName, String host)
     {
@@ -65,6 +66,7 @@ public class DefaultLocalTunnel implements LocalTunnel
         
         System.out.println("started the local tunnel");
         System.out.println("you can now access: " + remoteHost);
+        started = true;
     }
 
     private Backend getBackend(String host)
@@ -88,6 +90,13 @@ public class DefaultLocalTunnel implements LocalTunnel
     {
         proxyService.stop();
         pingPongService.stop();
+        started = false;
+    }
+    
+    @Override
+    public boolean isStarted()
+    {
+        return started;
     }
 
     @Override

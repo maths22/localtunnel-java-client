@@ -22,4 +22,6 @@ public interface LocalTunnel
     String getTunnelName();
 
     String getClientName();
+    
+    boolean isStarted();
 }
