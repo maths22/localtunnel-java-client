@@ -74,7 +74,7 @@ public class LocalTunnelTest
     {
 
         DefaultLocalTunnelFactory factory = new DefaultLocalTunnelFactory();
-        LocalTunnel tunnel = factory.create(8000);
+        LocalTunnel tunnel = factory.create(8000,"lt39.info:80");
 
         tunnel.start();
         Thread.sleep(1000 * 80);
