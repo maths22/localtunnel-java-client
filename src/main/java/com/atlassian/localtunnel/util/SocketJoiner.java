@@ -29,8 +29,7 @@ public class SocketJoiner
             @Override
             public void run()
             {
-                while(!fromExec.isShutdown() && !from.isClosed())
-                {
+
                     try
                     {
                         BufferedInputStream in = new BufferedInputStream(from.getInputStream());
@@ -45,17 +44,19 @@ public class SocketJoiner
                         try
                         {
                             from.close();
+                            to.close();
                         }
                         catch (IOException e1)
                         {
                            
                         }
                     }
-                }
+
 
                 try
                 {
                     to.close();
+                    from.close();
                 }
                 catch (IOException e)
                 {
@@ -68,8 +69,6 @@ public class SocketJoiner
             @Override
             public void run()
             {
-                while(!toExec.isShutdown() && !to.isClosed())
-                {
                     try
                     {
                         BufferedInputStream in = new BufferedInputStream(to.getInputStream());
@@ -84,16 +83,17 @@ public class SocketJoiner
                         try
                         {
                             to.close();
+                            from.close();
                         }
                         catch (IOException e1)
                         {
 
                         }
                     }
-                }
                 try
                 {
                     from.close();
+                    to.close();
                 }
                 catch (IOException e)
                 {

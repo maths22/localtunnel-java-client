@@ -55,14 +55,19 @@ public class ControlPingPongService
     
     public void stop()
     {
-        exec.shutdownNow();
         try
         {
+            control.close();
+            exec.shutdownNow();
             exec.awaitTermination(30, TimeUnit.SECONDS);
         }
         catch (InterruptedException e)
         {
-           
+
+        }
+        catch (IOException e)
+        {
+
         }
     }
 }
