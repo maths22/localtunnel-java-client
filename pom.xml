@@ -4,7 +4,7 @@
     
     <groupId>com.atlassian.localtunnel</groupId>
     <artifactId>localtunnel-java-client</artifactId>
-    <version>0.4</version>
+    <version>0.5-SNAPSHOT</version>
     <name>LocalTunnel Java Client</name>
     <packaging>bundle</packaging>
 
@@ -33,7 +33,7 @@
         <connection>scm:git:ssh://git@bitbucket.org/atlassian/localtunnel-java-client.git</connection>
         <developerConnection>scm:git:ssh://git@bitbucket.org/atlassian/localtunnel-java-client.git</developerConnection>
         <url>https://bitbucket.org/atlassian/localtunnel-java-client</url>
-        <tag>mvn-v0.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
